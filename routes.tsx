@@ -1,7 +1,7 @@
 import { h, Router, Status } from "deps";
 import { Counter } from "./components/Counter.tsx";
 import { template, component } from "./html.tsx";
-import { BaseLayout } from "./layout/BaseLayout.tsx";
+import { BaseLayout } from "./layouts/BaseLayout.tsx";
 
 export const htmlRouter = new Router();
 
