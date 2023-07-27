@@ -8,7 +8,7 @@ export const Counter = ({ value }: CounterProps) => {
     return (
         <div hx-target="this" hx-swap="outerHTML">
             <p>counter value {value}</p>
-            <button hx-get={`/numbers/${value}/successor`}>increment</button>
+            <button hx-get={`/numbers/${value + 1}`}>increment</button>
         </div>
     );
 };
