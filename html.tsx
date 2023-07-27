@@ -9,7 +9,20 @@ import {
     State,
 } from "deps";
 
-export function handleHtml<R extends string, S extends State>(
+export function component<R extends string, S extends State>(
+    callback: (ctx: RouterContext<R>) => Promise<Component>
+): RouterMiddleware<R, RouteParams<R>, S> {
+    return async (ctx) => serveJsx(ctx, await callback(ctx));
+}
+
+function serveJsx<R extends string>(
+    ctx: RouterContext<R>,
+    component: Component
+) {
+    return (ctx.response.body = renderSSR(component));
+}
+
+export function template<R extends string, S extends State>(
     callback: (ctx: RouterContext<R>) => Promise<Component>
 ): RouterMiddleware<R, RouteParams<R>, S> {
     return async (ctx) => serveHtml(ctx, await callback(ctx));
@@ -18,7 +31,7 @@ export function handleHtml<R extends string, S extends State>(
 function serveHtml<R extends string>(
     ctx: RouterContext<R>,
     component: Component
-) {
+): string {
     const { body, head, footer } = Helmet.SSR(renderSSR(component));
 
     const html = `

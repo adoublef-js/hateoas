@@ -1,14 +1,16 @@
 import { h, Router, Status } from "deps";
 import { Counter } from "./components/Counter.tsx";
-import { handleHtml } from "./html.tsx";
+import { template, component } from "./html.tsx";
 import { Page } from "./components/Home.tsx";
 
 export const htmlRouter = new Router();
 
 htmlRouter.get(
     "/",
-    handleHtml((_) => (
+    template((_) => (
+        // include the helmet here?
         <Page>
+            <Counter value={0} />
             <Counter value={0} />
         </Page>
     ))
@@ -16,7 +18,7 @@ htmlRouter.get(
 
 htmlRouter.get(
     "/numbers/:value",
-    handleHtml((ctx) => <Counter value={parseInt(ctx.params.value)} />)
+    component((ctx) => <Counter value={parseInt(ctx.params.value)} />)
 );
 
 htmlRouter.get("/numbers/:value/successor", (ctx) => {

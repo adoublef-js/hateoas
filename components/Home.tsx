@@ -1,7 +1,7 @@
 import { Component, Helmet, h } from "deps";
 
 type HomeProps = {
-    children: Component;
+    children: Component | Component[];
 };
 
 export const Page = ({ children }: HomeProps) => {
@@ -14,6 +14,7 @@ export const Page = ({ children }: HomeProps) => {
                     content="Server Side Rendered Nano JSX Application"
                 />
             </Helmet>
+            <h1>This is a document</h1>
             {children}
         </div>
     );
