@@ -1,18 +1,18 @@
-import { h, Router, Status } from "deps";
+import { h, Fragment, Helmet, Router, Status } from "deps";
 import { Counter } from "./components/Counter.tsx";
 import { template, component } from "./html.tsx";
-import { Page } from "./components/Home.tsx";
+import { Header } from "./components/Header.tsx";
 
 export const htmlRouter = new Router();
 
 htmlRouter.get(
     "/",
     template((_) => (
-        // include the helmet here?
-        <Page>
+        <>
+            <Header title="Counter Example" />
             <Counter value={0} />
             <Counter value={0} />
-        </Page>
+        </>
     ))
 );
 
