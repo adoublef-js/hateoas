@@ -1,21 +1,19 @@
 import { Application } from "deps";
-import { htmlRouter } from "./routes.tsx";
-
-export function add(a: number, b: number): number {
-    return a + b;
-}
+import { appRouter } from "./routes/mod.tsx";
+import { numbersRouter } from "./routes/numbers/mod.tsx";
 
 // Learn more at https://deno.land/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-    const app = new Application();
+    const server = new Application();
 
-    app.use(htmlRouter.allowedMethods(), htmlRouter.routes());
+    server.use(appRouter.routes());
+    server.use(numbersRouter.routes());
 
     // TODO: server islands
 
-    app.addEventListener("listen", ({ port }) => {
+    server.addEventListener("listen", ({ port }) => {
         console.log(`Listening on: http://localhost:${port}`);
     });
 
-    await app.listen({ port: 5000 });
+    await server.listen({ port: 5000 });
 }
