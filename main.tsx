@@ -25,9 +25,6 @@ if (import.meta.main) {
         setAccessToken()
     );
 
-    // getTokensBySession;
-    // getCookieName;
-
     app.route("/", jsx);
     app.route("/i", iam);
     app.route("/number", numbers);
