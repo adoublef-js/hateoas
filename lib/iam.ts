@@ -4,25 +4,29 @@ import {
     getSessionId,
     getSessionAccessToken,
     OAuth2Client,
+    MiddlewareHandler,
 } from "deps";
 import { AppEnv } from "lib/app_env.ts";
 
-export function setSessionId() {
-    return async (c: Context<AppEnv>, next: Next) => {
+export function setSessionId(): MiddlewareHandler<AppEnv> {
+    return async (c, next) => {
         c.set("sessionId", await getSessionId(c.req.raw));
         await next();
     };
 }
 
-export function setOAuthClient(client: OAuth2Client, logoutUrl: URL) {
-    return async (c: Context<AppEnv>, next: Next) => {
+export function setOAuthClient(
+    client: OAuth2Client,
+    logoutUrl: URL
+): MiddlewareHandler<AppEnv> {
+    return async (c, next) => {
         c.set("oauth2", { client, logoutUrl });
         await next();
     };
 }
 
-export function setAccessToken() {
-    return async (c: Context<AppEnv>, next: Next) => {
+export function setAccessToken(): MiddlewareHandler<AppEnv> {
+    return async (c, next) => {
         const { client } = c.get("oauth2");
         const sessionId = c.get("sessionId");
 
