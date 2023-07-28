@@ -6,7 +6,8 @@
         "deps": "./deps.ts",
         "components/": "./components/",
         "layouts/": "./layouts/",
-        "lib/": "./lib/"
+        "lib/": "./lib/",
+        "routes/": "./routes/"
     },
     "compilerOptions": {
         // "lib": [

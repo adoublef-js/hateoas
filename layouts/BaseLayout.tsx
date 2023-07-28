@@ -3,7 +3,11 @@
 import { jsx } from "deps";
 import { Header, Footer } from "components/page/mod.ts";
 
-export const BaseLayout = (props: { children?: string[] | string | null }) => {
+type BaseLayoutProps = {
+    children?: string[] | string | null;
+};
+
+export const BaseLayout = ({ children }: BaseLayoutProps) => {
     return (
         <html>
             <head>
@@ -18,7 +22,7 @@ export const BaseLayout = (props: { children?: string[] | string | null }) => {
                 <script src="https://unpkg.com/htmx.org@1.9.3"></script>
             </head>
             <Header />
-            <body>{props.children}</body>
+            <body>{children}</body>
             <Footer />
         </html>
     );
