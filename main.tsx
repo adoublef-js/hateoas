@@ -7,7 +7,8 @@ import {
     getSessionAccessToken,
     getSessionId,
 } from "deps";
-import { AppEnv } from "lib/app_env.ts";
+import { AppEnv, OAuth2Env } from "lib/app_env.ts";
+import { jsx } from "./jsx.ts";
 
 const client = createAuth0OAuth2Client({
     redirectUri: `${Deno.env.get("APP_URL")}/i/callback`,
@@ -21,20 +22,13 @@ logoutUrl.searchParams.append("returnTo", Deno.env.get("APP_URL")!);
 logoutUrl.searchParams.append("client_id", Deno.env.get("AUTH0_CLIENT_ID")!);
 
 if (import.meta.main) {
-    const app = new Hono<AppEnv>();
+    const app = new Hono<OAuth2Env>();
     app.use("*", async (c, next) => {
-        const sessionId = await getSessionId(c.req.raw);
-        const isSignedIn = sessionId !== undefined;
-        const accessToken = isSignedIn
-            ? await getSessionAccessToken(client, sessionId)
-            : null;
-
         c.set("oauth2", { client, logoutUrl });
-        c.set("accessToken", accessToken);
         await next();
     });
 
-    app.get("/", home);
+    app.route("/", jsx);
     app.route("/i", iam);
     app.route("/number", numbers);
 
