@@ -3,7 +3,10 @@
         "dev": "deno run -A --unstable --watch main.tsx"
     },
     "imports": {
-        "deps": "./deps.ts"
+        "deps": "./deps.ts",
+        "components/": "./components/",
+        "layouts/": "./layouts/",
+        "lib/": "./lib/"
     },
     "compilerOptions": {
         // "lib": [
