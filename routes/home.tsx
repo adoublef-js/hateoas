@@ -3,7 +3,7 @@
 import { Handler, getSessionAccessToken, getSessionId, jsx } from "deps";
 import { BaseLayout } from "layouts/mod.ts";
 import { Counter } from "components/counter/Counter.tsx";
-import { AccessTokenEnv, AppEnv } from "lib/app_env.ts";
+import { AppEnv } from "lib/app_env.ts";
 
 export const home: Handler<AppEnv> = (c) => {
     const accessToken = c.get("accessToken");

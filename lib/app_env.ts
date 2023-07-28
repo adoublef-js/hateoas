@@ -6,10 +6,16 @@ export type AccessTokenEnv = {
     };
 };
 
+export type SessionnEnv = {
+    Variables: {
+        sessionId: string | undefined;
+    };
+};
+
 export type OAuth2Env = {
     Variables: {
         oauth2: { client: OAuth2Client; logoutUrl: URL };
     };
 };
 
-export type AppEnv = AccessTokenEnv & OAuth2Env;
+export type AppEnv = AccessTokenEnv & OAuth2Env & SessionnEnv;
