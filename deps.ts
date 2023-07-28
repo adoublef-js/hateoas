@@ -5,7 +5,11 @@ export {
     type Handler,
     type MiddlewareHandler,
 } from "https://deno.land/x/hono@v3.3.4/mod.ts";
-export { jsx, memo } from "https://deno.land/x/hono@v3.3.4/middleware.ts";
+export {
+    jsx,
+    memo,
+    serveStatic,
+} from "https://deno.land/x/hono@v3.3.4/middleware.ts";
 export {
     createAuth0OAuth2Client,
     getSessionAccessToken,

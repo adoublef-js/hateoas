@@ -6,19 +6,19 @@ import {
 } from "deps";
 import { AppEnv } from "lib/app_env.ts";
 
-export function setSessionId(): MiddlewareHandler<AppEnv> {
-    return async (c, next) => {
-        c.set("sessionId", await getSessionId(c.req.raw));
-        await next();
-    };
-}
-
 export function setOAuthClient(
     client: OAuth2Client,
     logoutUrl: URL
 ): MiddlewareHandler<AppEnv> {
     return async (c, next) => {
         c.set("oauth2", { client, logoutUrl });
+        await next();
+    };
+}
+
+export function setSessionId(): MiddlewareHandler<AppEnv> {
+    return async (c, next) => {
+        c.set("sessionId", await getSessionId(c.req.raw));
         await next();
     };
 }

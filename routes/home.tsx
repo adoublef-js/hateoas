@@ -6,13 +6,18 @@ import { Counter } from "components/counter/Counter.tsx";
 import { AppEnv } from "lib/app_env.ts";
 
 export const home: Handler<AppEnv> = (c) => {
-    const accessToken = c.get("accessToken");
+    const isSignedIn = c.get("sessionId") !== undefined;
 
     return c.html(
         <BaseLayout>
             <div>
                 <title>Deno 💛 Hateoas</title>
-                {accessToken === null ? (
+                <img
+                    src="/assets/static/images/dinotocat.png"
+                    alt="Dinotocat"
+                    height="200"
+                />
+                {!isSignedIn ? (
                     <div>
                         <p>Please log in 🤔</p>
                         <a href="/i/signin">Sign in</a>
@@ -23,7 +28,7 @@ export const home: Handler<AppEnv> = (c) => {
                         <a href="/i/signout">Sign out</a>
                     </div>
                 )}
-                {accessToken && (
+                {isSignedIn && (
                     <div>
                         <Counter value={0} />
                     </div>
