@@ -1,7 +1,7 @@
 import { Hono, signIn, handleCallback, signOut } from "deps";
-import { Oauth2Variables } from "lib/oauth.ts";
+import { OAuth2Env } from "lib/oauth.ts";
 
-export const iam = new Hono<{ Variables: Oauth2Variables }>();
+export const iam = new Hono<OAuth2Env>();
 
 iam.get("/signin", async (c) => {
     const response = await signIn(c.req.raw, c.get("oauth2").client);
