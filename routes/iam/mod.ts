@@ -1,5 +1,5 @@
 import { Hono, signIn, handleCallback, signOut } from "deps";
-import { OAuth2Env } from "lib/oauth.ts";
+import { OAuth2Env } from "lib/app_env.ts";
 
 export const iam = new Hono<OAuth2Env>();
 

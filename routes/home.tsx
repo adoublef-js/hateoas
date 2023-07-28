@@ -3,14 +3,10 @@
 import { Handler, getSessionAccessToken, getSessionId, jsx } from "deps";
 import { BaseLayout } from "layouts/mod.ts";
 import { Counter } from "components/counter/Counter.tsx";
-import { OAuth2Env } from "lib/oauth.ts";
+import { AppEnv } from "lib/app_env.ts";
 
-export const home: Handler<OAuth2Env> = async (c) => {
-    const sessionId = await getSessionId(c.req.raw);
-    const isSignedIn = sessionId !== undefined;
-    const accessToken = isSignedIn
-        ? await getSessionAccessToken(c.get("oauth2").client, sessionId)
-        : null;
+export const home: Handler<AppEnv> = (c) => {
+    const accessToken = c.get("accessToken");
 
     return c.html(
         <BaseLayout>
