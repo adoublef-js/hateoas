@@ -1,18 +1,18 @@
 {
     "tasks": {
-        "dev": "deno run --allow-net --allow-read --allow-env --unstable --watch main.ts"
+        "dev": "deno run -A --unstable --watch main.tsx"
     },
     "imports": {
         "deps": "./deps.ts"
     },
     "compilerOptions": {
-        "lib": [
-            "dom",
-            "dom.iterable",
-            "dom.asynciterable",
-            "deno.ns"
-        ],
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment"
+        // "lib": [
+        // "dom",
+        // "dom.iterable",
+        // "dom.asynciterable",
+        // "deno.ns"
+        // ],
+        // "jsxFactory": "h",
+        // "jsxFragmentFactory": "Fragment"
     }
 }
