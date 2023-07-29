@@ -7,7 +7,7 @@
         "components/": "./components/",
         "layouts/": "./layouts/",
         "lib/": "./lib/",
-        "routes/": "./groups/",
+        "api/": "./api/",
         "hono/jsx": "https://esm.sh/hono@3.3.4/jsx",
         "hono/jsx/": "https://esm.sh/hono@3.3.4/jsx/"
     },

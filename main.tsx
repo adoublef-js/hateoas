@@ -1,5 +1,5 @@
-import { iam } from "routes/iam/mod.ts";
-import { counters } from "routes/counters/mod.tsx";
+import { iam } from "api/iam/mod.ts";
+import { counters } from "api/counters/mod.tsx";
 import {
     Hono,
     createAuth0OAuth2Client,
@@ -41,6 +41,7 @@ if (import.meta.main) {
     app.use("*", oauthClient(client, logoutUrl), session());
 
     app.get("/", ({ html, get }) =>
+        // TODO app profile
         get("sessionId") ? html(<Dashboard />) : html(<Home />)
     );
 
