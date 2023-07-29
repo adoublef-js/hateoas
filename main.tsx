@@ -50,6 +50,7 @@ if (import.meta.main) {
     app.route("/count", counters);
 
     app.use("/*", serveStatic({ root: "./static/" }));
+    app.use("/icon.svg", serveStatic({ path: "./static/icon.svg" }));
     app.use("/favicon.ico", serveStatic({ path: "./static/favicon.ico" }));
 
     const port = Number(Deno.env.get("PORT"));
