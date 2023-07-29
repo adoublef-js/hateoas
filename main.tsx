@@ -5,6 +5,7 @@ import {
     createAuth0OAuth2Client,
     serveStatic,
     HTTPException,
+    logger,
 } from "deps";
 import { AppEnv } from "lib/app_env.ts";
 import { oauthClient, session } from "lib/iam.tsx";
@@ -38,7 +39,7 @@ if (import.meta.main) {
         return c.text("Custom 404 Message", 404);
     });
 
-    app.use("*", oauthClient(client, logoutUrl), session());
+    app.use("*", logger(), oauthClient(client, logoutUrl), session());
 
     app.get("/", ({ html, get }) =>
         // TODO app profile

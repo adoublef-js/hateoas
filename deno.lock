@@ -353,10 +353,15 @@
     "https://esm.sh/v130/@noble/hashes@1.3.1/denonext/sha3.js": "1e36a7667723a485763c3d1d37301899cc3c770f888e8b30545c8279df1dcd58",
     "https://esm.sh/v130/@noble/hashes@1.3.1/denonext/utils.js": "73a8798f9f966ea13f25d76fd606649138b0150fec6943a077bb95bc32471ab3",
     "https://esm.sh/v130/@paralleldrive/cuid2@2.2.1/denonext/cuid2.mjs": "e5fc738f120c2d729e9b8c65425790bb89496fc4b4498bb99856bdf113d82f10",
+    "https://esm.sh/v130/@paralleldrive/cuid2@2.2.1/index.d.ts": "37a6886ea9d6844caef359430973a0e7391c49e2d68cacb39f74180db38acb6e",
     "https://esm.sh/v130/hono@3.3.4/denonext/jsx.js": "dcdd6a659f8a0ded9c3e3b1d8a94128480ff1c75f3b0622e2bfad09dc736db24",
     "https://esm.sh/v130/hono@3.3.4/denonext/jsx/jsx-dev-runtime.js": "af9fa9c70443f87607c66dc7e000b26ef4d753d941d11309ccdf32d26f9b2339",
     "https://esm.sh/v130/hono@3.3.4/denonext/jsx/jsx-runtime.js": "615a05ecc55106872dadf9f3a229c5adf2f02e6df561685ded0b2ae4355cf3e8",
-    "https://esm.sh/v130/hono@3.3.4/denonext/utils/html.js": "ab29e80aa831f0115be1d3d914d66bf00a30102da4cf25abf3248e3867d08cb8"
+    "https://esm.sh/v130/hono@3.3.4/denonext/utils/html.js": "ab29e80aa831f0115be1d3d914d66bf00a30102da4cf25abf3248e3867d08cb8",
+    "https://esm.sh/v130/hono@3.3.4/dist/types/middleware/jsx/index.d.ts": "aa21c3ff7eb6c3716a3422c494f4234fa034f9918a3e631b0a3969d64350891e",
+    "https://esm.sh/v130/hono@3.3.4/dist/types/middleware/jsx/jsx-dev-runtime.d.ts": "d75dcc62ec6122a45fdf37105e79fca9dfb4f513ce6aca20a4f56c681242467c",
+    "https://esm.sh/v130/hono@3.3.4/dist/types/middleware/jsx/jsx-runtime.d.ts": "504c723e86ae03a1bd8183f22a4f55021a66375ad05a8a10205de57d9a473dfa",
+    "https://esm.sh/v130/hono@3.3.4/dist/types/utils/html.d.ts": "442f7c088944e1df327fac572223350ce7951a3bfd3546949a2eda6dbc184d9a"
   },
   "npm": {
     "specifiers": {

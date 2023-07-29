@@ -10,6 +10,7 @@ export {
 export {
     memo,
     serveStatic,
+    logger,
 } from "https://deno.land/x/hono@v3.3.4/middleware.ts";
 export {
     createAuth0OAuth2Client,
@@ -29,4 +30,4 @@ export {
     assertThrows,
     assertEquals,
     assert,
-} from "https://deno.land/std@0.195.0/assert/mod.ts"; 
+} from "https://deno.land/std@0.195.0/assert/mod.ts";
