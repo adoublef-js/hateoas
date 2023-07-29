@@ -16,6 +16,7 @@ export const home: Handler<AppEnv> = (c) => {
                     src="/assets/static/images/dinotocat.png"
                     alt="Dinotocat"
                     height="200"
+                    style="mix-blend-mode: multiply;"
                 />
                 {!isSignedIn ? (
                     <div>
@@ -37,3 +38,22 @@ export const home: Handler<AppEnv> = (c) => {
         </BaseLayout>
     );
 };
+
+/*
+ normal       |
+  multiply     |
+  screen       |
+  overlay      |
+  darken       |
+  lighten      |
+  color-dodge  |
+  color-burn   |
+  hard-light   |
+  soft-light   |
+  difference   |
+  exclusion    |
+  hue          |
+  saturation   |
+  color        |
+  luminosity  
+*/

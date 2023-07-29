@@ -7,6 +7,7 @@ type BaseLayoutProps = {
     children?: string[] | string | null;
 };
 
+// NOTE cheaper to render this as a html string?
 export const BaseLayout = ({ children }: BaseLayoutProps) => {
     return (
         <html>
@@ -19,11 +20,19 @@ export const BaseLayout = ({ children }: BaseLayoutProps) => {
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
+                <link rel="stylesheet" href="/assets/static/styles/reset.css" />
+                <link
+                    rel="stylesheet"
+                    href="/assets/static/styles/global.css"
+                />
                 <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+                <script src="https://unpkg.com/htmx.org/dist/ext/disable-element.js"></script>
             </head>
-            <Header />
-            <body>{children}</body>
-            <Footer />
+            <body class="wrapper flow">
+                <Header />
+                {children}
+                <Footer />
+            </body>
         </html>
     );
 };
