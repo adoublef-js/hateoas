@@ -1,5 +1,6 @@
 export {
     Hono,
+    HTTPException,
     type Env,
     type Context,
     type Next,
