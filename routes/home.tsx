@@ -9,9 +9,8 @@ export const home: Handler<AppEnv> = (c) => {
     const isSignedIn = c.get("sessionId") !== undefined;
 
     return c.html(
-        <BaseLayout>
+        <BaseLayout title="Deno 💛 Hateoas">
             <div>
-                <title>Deno 💛 Hateoas</title>
                 <img
                     src="/assets/static/images/dinotocat.png"
                     alt="Dinotocat"
