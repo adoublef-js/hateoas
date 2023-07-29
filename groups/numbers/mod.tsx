@@ -7,6 +7,6 @@ import { setAccessToken, setSessionId } from "lib/iam.ts";
 
 export const numbers = new Hono<AppEnv>();
 
-numbers.get("/:value", setSessionId(), setAccessToken(), ({ html, req }) => {
+numbers.get("/:value", setAccessToken(), ({ html, req }) => {
     return html(<Counter value={parseInt(req.param("value"))} />);
 });

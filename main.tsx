@@ -37,9 +37,9 @@ if (import.meta.main) {
         );
     });
 
-    app.use("*", setOAuthClient(client, logoutUrl));
+    app.use("*", setOAuthClient(client, logoutUrl), setSessionId());
 
-    app.get("/", setSessionId(), ({ html, get }) =>
+    app.get("/", ({ html, get }) =>
         get("sessionId") ? html(<Dashboard />) : html(<Home />)
     );
 
