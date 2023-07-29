@@ -7,7 +7,7 @@ export function Home(props: HomeProps) {
         <BaseLayout title="Deno 💛 Hateoas">
             <div>
                 <img
-                    src="/assets/static/images/dinotocat.png"
+                    src="/dinotocat.png"
                     alt="Dinotocat"
                     height="200"
                     style="mix-blend-mode: multiply;"

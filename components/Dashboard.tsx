@@ -7,7 +7,7 @@ export function Dashboard(props: DashboardProps) {
     return (
         <BaseLayout title="Deno 💛 Hateoas">
             <img
-                src="/assets/static/images/dinotocat.png"
+                src="/dinotocat.png"
                 alt="Dinotocat"
                 height="200"
                 style="mix-blend-mode: multiply;"

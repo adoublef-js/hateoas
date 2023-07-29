@@ -47,8 +47,8 @@ if (import.meta.main) {
     app.route("/i", iam);
     app.route("/count", counters);
 
-    app.use("/assets/*", serveStatic({ root: "./" }));
-    app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
+    app.use("/*", serveStatic({ root: "./static/" }));
+    app.use("/favicon.ico", serveStatic({ path: "./static/favicon.ico" }));
 
     const port = Number(Deno.env.get("PORT"));
     Deno.serve({ port }, app.fetch);
