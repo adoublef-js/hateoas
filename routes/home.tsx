@@ -31,28 +31,10 @@ export const home: Handler<AppEnv> = (c) => {
                 {isSignedIn && (
                     <div>
                         <Counter value={0} />
+                        <Counter value={0} />
                     </div>
                 )}
             </div>
         </BaseLayout>
     );
 };
-
-/*
- normal       |
-  multiply     |
-  screen       |
-  overlay      |
-  darken       |
-  lighten      |
-  color-dodge  |
-  color-burn   |
-  hard-light   |
-  soft-light   |
-  difference   |
-  exclusion    |
-  hue          |
-  saturation   |
-  color        |
-  luminosity  
-*/
