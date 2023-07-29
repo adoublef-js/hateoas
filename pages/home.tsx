@@ -1,6 +1,6 @@
 /** @jsx jsx */
 /** @jsxFrag Fragment */
-import { Handler, getSessionAccessToken, getSessionId, jsx } from "deps";
+import { Handler, jsx } from "deps";
 import { BaseLayout } from "layouts/mod.ts";
 import { Counter } from "components/counter/Counter.tsx";
 import { AppEnv } from "lib/app_env.ts";

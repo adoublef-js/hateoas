@@ -2,8 +2,8 @@ import { iam } from "routes/iam/mod.ts";
 import { numbers } from "routes/numbers/mod.tsx";
 import { Hono, createAuth0OAuth2Client, serveStatic } from "deps";
 import { AppEnv } from "lib/app_env.ts";
-import { jsx } from "./jsx.ts";
-import { setOAuthClient } from "lib/iam.ts";
+import { setOAuthClient, setSessionId } from "lib/iam.ts";
+import { home } from "pages/home.tsx";
 
 const client = createAuth0OAuth2Client({
     redirectUri: `${Deno.env.get("APP_URL")}/i/callback`,
@@ -18,11 +18,14 @@ logoutUrl.searchParams.append("client_id", Deno.env.get("AUTH0_CLIENT_ID")!);
 
 if (import.meta.main) {
     const app = new Hono<AppEnv>();
+
     app.use("*", setOAuthClient(client, logoutUrl));
 
-    app.route("/", jsx);
+    app.get("/", setSessionId(), home);
+
     app.route("/i", iam);
     app.route("/number", numbers);
+
     app.use("/assets/*", serveStatic({ root: "./" }));
     app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
 

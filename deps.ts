@@ -1,5 +1,6 @@
 export {
     Hono,
+    type Env,
     type Context,
     type Next,
     type Handler,
