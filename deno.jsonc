@@ -1,6 +1,7 @@
 {
     "tasks": {
-        "dev": "deno run -A --unstable --watch main.tsx"
+        "dev": "deno run -A --unstable --watch main.tsx",
+        "test": "deno test --unstable --allow-env --allow-read --allow-run --parallel"
     },
     "imports": {
         "deps": "./deps.ts",
@@ -19,7 +20,7 @@
         // "deno.ns"
         // ],
         "jsx": "react-jsx",
-        "jsxFragmentFactory": "Fragment",
+        // "jsxFragmentFactory": "Fragment",
         "jsxImportSource": "hono/jsx"
     }
 }
