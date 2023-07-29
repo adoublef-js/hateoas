@@ -1,22 +1,17 @@
-import { BaseLayout } from "components/layouts/BaseLayout.tsx";
+import { Html, SiteData } from "components/layouts/BaseLayout.tsx";
+import { Header, Footer } from "components/base/mod.ts";
 
-type HomeProps = {};
+type HomeProps = SiteData;
 
 export function Home(props: HomeProps) {
     return (
-        <BaseLayout title="Deno 💛 Hateoas">
-            <div>
-                <img
-                    src="/dinotocat.png"
-                    alt="Dinotocat"
-                    height="200"
-                    style="mix-blend-mode: multiply;"
-                />
-                <div>
-                    <p>Please log in 🤔</p>
-                    <a href="/i/signin">Sign in</a>
-                </div>
-            </div>
-        </BaseLayout>
+        <Html {...props.siteData}>
+            <Header />
+            <main>
+                <p>Please log in 🤔</p>
+                <a href="/i/signin">Sign in</a>
+            </main>
+            <Footer />
+        </Html>
     );
 }

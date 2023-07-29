@@ -7,10 +7,12 @@ export {
     type Handler,
     type MiddlewareHandler,
 } from "https://deno.land/x/hono@v3.3.4/mod.ts";
+export { type HtmlEscapedString } from "https://deno.land/x/hono@v3.3.4/utils/html.ts";
 export {
     memo,
     serveStatic,
     logger,
+    html,
 } from "https://deno.land/x/hono@v3.3.4/middleware.ts";
 export {
     createAuth0OAuth2Client,

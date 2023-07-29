@@ -43,7 +43,9 @@ if (import.meta.main) {
 
     app.get("/", ({ html, get }) =>
         // TODO app profile
-        get("sessionId") ? html(<Dashboard />) : html(<Home />)
+        get("sessionId")
+            ? html(<Dashboard siteData={{ title: "Welcome, Deno!" }} />)
+            : html(<Home siteData={{ title: "Deno 💛 Htmx" }} />)
     );
 
     app.route("/i", iam);
