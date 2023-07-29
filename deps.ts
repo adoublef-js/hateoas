@@ -19,5 +19,9 @@ export {
     handleCallback,
     signIn,
     signOut,
+    // } from "./vendor/deno_kv_oauth/mod.ts";
 } from "https://deno.land/x/deno_kv_oauth@v0.2.8/mod.ts";
-export { OAuth2Client } from "https://deno.land/x/deno_kv_oauth@v0.2.8/deps.ts";
+export {
+    OAuth2Client,
+    Status,
+} from "https://deno.land/x/deno_kv_oauth@v0.2.8/deps.ts";

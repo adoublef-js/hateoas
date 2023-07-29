@@ -2,4 +2,8 @@
 /** @jsxFrag Fragment */
 import { jsx, memo } from "deps";
 
-export const Header = memo(() => <header>Welcome to Hono</header>);
+type HeaderProps = {};
+
+export const Header = memo((props: HeaderProps) => (
+    <header>Welcome to Hono</header>
+));

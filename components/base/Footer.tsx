@@ -2,7 +2,9 @@
 /** @jsxFrag Fragment */
 import { jsx, memo } from "deps";
 
-export const Footer = memo(() => (
+type FooterProps = {};
+
+export const Footer = memo((props: FooterProps) => (
     <footer>
         <small>Powered by Hono</small>
         <ul>

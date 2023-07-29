@@ -3,10 +3,10 @@
 import { Hono, jsx } from "deps";
 import { Counter } from "components/counter/Counter.tsx";
 import { AppEnv } from "lib/app_env.ts";
-import { setAccessToken, setSessionId } from "lib/iam.ts";
+import { authorization } from "lib/iam.tsx";
 
-export const numbers = new Hono<AppEnv>();
+export const counters = new Hono<AppEnv>();
 
-numbers.get("/:value", setAccessToken(), ({ html, req }) => {
+counters.get("/:value", authorization(), ({ req, html }) => {
     return html(<Counter value={parseInt(req.param("value"))} />);
 });
