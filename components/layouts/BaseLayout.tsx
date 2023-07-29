@@ -1,6 +1,3 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-import { jsx } from "deps";
 import { Header, Footer } from "components/base/mod.ts";
 
 type BaseLayoutProps = {

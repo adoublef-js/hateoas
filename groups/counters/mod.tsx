@@ -1,6 +1,4 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-import { Hono, jsx } from "deps";
+import { Hono } from "deps";
 import { Counter } from "components/counter/Counter.tsx";
 import { AppEnv } from "lib/app_env.ts";
 import { authorization } from "lib/iam.tsx";

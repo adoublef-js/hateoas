@@ -1,7 +1,3 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-import { jsx } from "deps";
-
 type CounterProps = {
     value: number;
 };

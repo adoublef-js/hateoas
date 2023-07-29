@@ -1,8 +1,6 @@
-/** @jsx jsx */
 import { iam } from "routes/iam/mod.ts";
 import { counters } from "routes/counters/mod.tsx";
 import {
-    jsx,
     Hono,
     createAuth0OAuth2Client,
     serveStatic,

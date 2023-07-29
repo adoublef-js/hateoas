@@ -1,6 +1,3 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-import { jsx } from "deps";
 import { BaseLayout } from "components/layouts/BaseLayout.tsx";
 import { Counter } from "components/counter/Counter.tsx";
 

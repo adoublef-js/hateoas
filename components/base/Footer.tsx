@@ -1,6 +1,4 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-import { jsx, memo } from "deps";
+import { memo } from "deps";
 
 type FooterProps = {};
 

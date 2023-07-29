@@ -279,7 +279,8 @@
   "npm": {
     "specifiers": {
       "@libsql/client": "@libsql/client@0.3.1",
-      "drizzle-orm": "drizzle-orm@0.27.2_@libsql+client@0.3.1"
+      "drizzle-orm": "drizzle-orm@0.27.2_@libsql+client@0.3.1",
+      "hono": "hono@3.3.4"
     },
     "packages": {
       "@libsql/client@0.3.1": {
@@ -427,6 +428,10 @@
       },
       "github-from-package@0.0.0": {
         "integrity": "sha512-SyHy3T1v2NUXn29OsWdxmK6RwHD+vkj3v8en8AOBZ1wBQ/hCAQ5bAQTD02kW4W9tUp/3Qh6J8r9EvntiyCmOOw==",
+        "dependencies": {}
+      },
+      "hono@3.3.4": {
+        "integrity": "sha512-lqvcsQrXS0bSydj/MkOXi3opAwrlauIjZefhXMMRj9prABfBWdrYHSrWk/xfxgxNPs4yuEMh2Z5zV0L2b1Jmdw==",
         "dependencies": {}
       },
       "ieee754@1.2.1": {
