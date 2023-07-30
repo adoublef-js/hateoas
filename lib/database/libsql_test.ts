@@ -17,7 +17,11 @@ import {
     Config,
 } from "https://esm.sh/@libsql/client@0.3.1";
 import { encode } from "https://deno.land/std@0.196.0/encoding/base64.ts";
-import { assertEquals } from "https://deno.land/std@0.195.0/assert/assert_equals.ts";
+import {
+    assertEquals,
+    assertObjectMatch,
+    assertArrayIncludes,
+} from "https://deno.land/std@0.195.0/assert/mod.ts";
 
 function withClient(
     f: (c: Client) => Promise<void>,
@@ -56,11 +60,47 @@ Deno.test("Sqlite3Client()", async (test) => {
     await test.step("execute()", async (test) => {
         // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L85
         await test.step(
-            "return 42",
+            "query a single value",
             withClient(async (c) => {
                 const rs = await c.execute("SELECT 42");
                 assertEquals(rs.columns.length, 1);
                 assertEquals(rs.rows.length, 1);
+            })
+        );
+
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L93
+        await test.step(
+            "query a single row",
+            withClient(async (c) => {
+                const rs = await c.execute(
+                    "SELECT 1 AS one, 'two' AS two, 0.5 AS three"
+                );
+                assertArrayIncludes(rs.columns, ["one", "two", "three"]);
+                assertEquals(rs.rows.length, 1);
+
+                const r = rs.rows[0];
+                assertEquals(r.length, 3);
+                assertArrayIncludes(Array.from(r), [1, "two", 0.5]);
+                assertArrayIncludes(Object.entries(r), [
+                    ["one", 1],
+                    ["two", "two"],
+                    ["three", 0.5],
+                ]);
+            })
+        );
+
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L104
+        await test.step(
+            "query multiple rows",
+            withClient(async (c) => {
+                const rs = await c.execute(
+                    "VALUES (1, 'one'), (2, 'two'), (3, 'three')"
+                );
+                assertEquals(rs.columns.length, 2);
+                assertEquals(rs.rows.length, 3);
+                assertArrayIncludes(Array.from(rs.rows[0]), [1, "one"]);
+                assertArrayIncludes(Array.from(rs.rows[1]), [2, "two"]);
+                assertArrayIncludes(Array.from(rs.rows[2]), [3, "three"]);
             })
         );
     });
