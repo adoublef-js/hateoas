@@ -11,8 +11,8 @@ import { AppEnv } from "lib/app_env.ts";
 import { oauthClient, session } from "lib/iam.tsx";
 import { Home } from "components/Home.tsx";
 import { Dashboard } from "components/Dashboard.tsx";
-import { createClient, tursoClient } from "lib/libsql/mod.ts";
-// import { createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
+import { tursoClient } from "lib/libsql/mod.ts";
+import { createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
 
 const client = createAuth0OAuth2Client({
     redirectUri: `${Deno.env.get("APP_URL")}/i/callback`,
