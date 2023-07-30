@@ -1,4 +1,4 @@
-import { Html, SiteData } from "components/layouts/BaseLayout.tsx";
+import { Html, SiteData } from "components/layouts/Html.tsx";
 import { Counter } from "components/counter/Counter.tsx";
 import { Header, Footer } from "components/base/mod.ts";
 
@@ -8,15 +8,9 @@ export function Dashboard(props: DashboardProps) {
     return (
         <Html {...props.siteData}>
             <Header />
-            <main>
+            <main class="wrapper flow">
                 <header>
-                    <h1>Welcome, Friend 👋🏿</h1>
-                    <img
-                        src="/dinotocat.png"
-                        alt="Dinotocat"
-                        height="64"
-                        style="mix-blend-mode: multiply;"
-                    />
+                    <h1>Welcome 👋🏿</h1>
                 </header>
                 <section>
                     <Counter value={0} />

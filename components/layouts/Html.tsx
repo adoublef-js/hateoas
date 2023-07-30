@@ -34,7 +34,7 @@ export const Layout = (props: LayoutProps) => html`<!DOCTYPE html>
             <script src="https://unpkg.com/htmx.org@1.9.3"></script>
             <script src="https://unpkg.com/htmx.org/dist/ext/disable-element.js"></script>
         </head>
-        <body>
+        <body class="main-layout">
             ${props.children}
         </body>
     </html>`;

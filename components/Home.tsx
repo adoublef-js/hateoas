@@ -1,4 +1,4 @@
-import { Html, SiteData } from "components/layouts/BaseLayout.tsx";
+import { Html, SiteData } from "components/layouts/Html.tsx";
 import { Header, Footer } from "components/base/mod.ts";
 
 type HomeProps = SiteData;

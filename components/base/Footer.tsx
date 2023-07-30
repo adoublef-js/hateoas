@@ -1,16 +1,43 @@
 import { memo } from "deps";
+import { Component } from "components/component.ts";
+import { Deno, GitHub } from "components/svg/Svg.tsx";
+
+const SVG = ({
+    viewBox,
+    children,
+    ...props
+}: {
+    viewBox: [number, number, number, number];
+    children: Component | Component[];
+    class?: string;
+    styles?: string;
+    width?: number;
+    height?: number;
+}) => (
+    <svg
+        viewBox={viewBox.join(" ")}
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+    >
+        {children}
+    </svg>
+);
 
 type FooterProps = {};
 
 export const Footer = memo((props: FooterProps) => (
     <footer>
         <small>Powered by Hono</small>
-        <ul>
+        <ul class="list-hidden">
             <li>
-                <a href="https://github.com/adoublef-js/hateoas">Github</a>
+                <a href="https://github.com/adoublef-js/hateoas">
+                    <GitHub class="logo github" />
+                </a>
             </li>
             <li>
-                <a href="https://hateoas.adoublef.dev">Home</a>
+                <a href="https://deno.land/">
+                    <Deno class="logo deno" />
+                </a>
             </li>
         </ul>
     </footer>
