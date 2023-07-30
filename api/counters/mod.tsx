@@ -5,6 +5,12 @@ import { authorization } from "lib/iam.tsx";
 
 export const counters = new Hono<AppEnv>();
 
-counters.get("/:value", authorization(), ({ req, html }) => {
-    return html(<Counter value={parseInt(req.param("value"))} />);
+counters.get("/:value", authorization(), async ({ req, html, get }) => {
+    const value = parseInt(req.param("value"));
+    const rs = await get("dbClient").execute({
+        sql: "SELECT ?",
+        args: [value],
+    });
+
+    return html(<Counter value={Number(rs.rows[0][0])} />);
 });

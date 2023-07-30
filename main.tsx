@@ -26,6 +26,8 @@ logoutUrl.searchParams.append("returnTo", Deno.env.get("APP_URL")!);
 logoutUrl.searchParams.append("client_id", Deno.env.get("AUTH0_CLIENT_ID")!);
 
 if (import.meta.main) {
+    // const dbUrl = "file:hateoas.db";
+    // const authToken = "";
     const dbUrl = Deno.env.get("DATABASE_URL")!;
     const authToken = Deno.env.get("TURSO_AUTH_TOKEN");
 
