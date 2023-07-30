@@ -1,5 +1,4 @@
 // https://github.com/denodrivers/sqlite3
-import { encode } from "https://deno.land/std@0.176.0/encoding/hex.ts";
 import {
     BindParameters,
     BindValue,
@@ -31,14 +30,6 @@ import {
     ExpandedConfig,
     expandConfig,
 } from "https://esm.sh/@libsql/client@0.3.1/lib-esm/config.js";
-
-// export function createClient(config: Config): Client {
-//     // TODO
-//     const path = config.url; // https://www.sqlite.org/inmemorydb.html
-//     const options = {};
-//     // @ts-ignore I know
-//     return new Sqlite3Client(path, options, config.intMode);
-// }
 
 export function createClient(config: Config): Client {
     return _createClient(expandConfig(config, true));
@@ -83,7 +74,7 @@ export function _createClient(config: ExpandedConfig): Client {
     }
 
     const path = config.path;
-    const options = {};
+    const options = { int64: true } satisfies DatabaseOpenOptions;
 
     const db = new Database(path, options);
     try {
@@ -270,19 +261,19 @@ async function executeStmt(
     }
 
     const sqlStmt = db.prepare(sql);
+    db.int64 = true;
     try {
         // make safe for integers
-        // https://github.com/signalapp/better-sqlite3/blob/better-sqlcipher/docs/integer.md
+        // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/integer.md#getting-bigints-from-the-database
+        // https://github.com/s ignalapp/better-sqlite3/blob/better-sqlcipher/docs/integer.md
         // https://deno.land/x/sqlite3@0.3.0/src/database.ts?source=#L418
 
-        let returnsData = true;
-        // NOTE if raw() then don't return data
-        // Causes the prepared statement to return rows as arrays instead of objects
         // https://github.com/libsql/libsql-client-ts/blob/main/src/sqlite3.ts#L214-L219
+        let returnsData = true;
         if (returnsData) {
             const columns = sqlStmt.columnNames();
-            const rows = sqlStmt.all(args).map((sqlRow) => {
-                return rowFromSql(Object.values(sqlRow), columns, intMode);
+            const rows = sqlStmt.values(args).map((sqlRow) => {
+                return rowFromSql(sqlRow, columns, intMode);
             });
 
             // https://github.com/libsql/libsql-client-ts/blob/main/src/sqlite3.ts#L226
@@ -332,6 +323,7 @@ function rowFromSql(
 
 function valueFromSql(sqlValue: unknown, intMode: IntMode): Value {
     if (typeof sqlValue === "bigint") {
+        console.log("typeof valueFromSql.sqlValue === bigint", sqlValue);
         if (intMode === "number") {
             if (sqlValue < minSafeBigint || sqlValue > maxSafeBigint) {
                 throw new RangeError(

@@ -1,5 +1,6 @@
 // https://github.com/denodrivers/sqlite3
 import { assertRejects } from "https://deno.land/std@0.195.0/assert/assert_rejects.ts";
+import { assertStrictEquals } from "https://deno.land/std@0.195.0/assert/assert_strict_equals.ts";
 import {
     assertArrayIncludes,
     assertEquals,
@@ -8,6 +9,9 @@ import {
     LibsqlError,
     Config,
     Client,
+    InValue,
+    IntMode,
+    Value,
 } from "https://esm.sh/@libsql/client@0.3.1";
 import { createClient } from "lib/libsql/denodrivers/client.ts";
 
@@ -16,6 +20,7 @@ function withClient(
     extraConfig: Partial<Config> = {}
 ): () => Promise<void> {
     return async () => {
+        const file = Deno.createSync("test.db");
         const c = createClient({
             url: "file:test.db",
             ...extraConfig,
@@ -24,6 +29,8 @@ function withClient(
             await f(c);
         } finally {
             c.close();
+            file.close();
+            Deno.removeSync("test.db");
         }
     };
 }
@@ -97,6 +104,17 @@ Deno.test("Sqlite3Client()", async (test) => {
 
         // https://github.com/denodrivers/sqlite3/blob/main/doc.md
         await test.step("arguments", async (test) => {
+            await test.step(
+                "? arguments",
+                withClient(async (c) => {
+                    const rs = await c.execute({
+                        sql: "SELECT ?, ?",
+                        args: ["one", "two"],
+                    });
+                    assertArrayIncludes(Array.from(rs.rows[0]), ["one", "two"]);
+                })
+            );
+
             await test.step(
                 ": arguments",
                 withClient(async (c) => {
@@ -298,5 +316,93 @@ Deno.test("Sqlite3Client()", async (test) => {
                 assertArrayIncludes(Array.from(rs.rows[0]), [42, "foo"]);
             })
         );
+    });
+
+    await test.step("values", async (test) => {
+        async function testRoundtrip(
+            name: string,
+            passed: InValue,
+            expected: Value,
+            intMode?: IntMode
+        ): Promise<void> {
+            await test.step(
+                name,
+                withClient(
+                    async (c) => {
+                        const rs = await c.execute({
+                            sql: "SELECT ?",
+                            args: [passed],
+                        });
+                        assertEquals(rs.rows[0][0], expected);
+                    },
+                    { intMode }
+                )
+            );
+        }
+
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L206C3-L209C79
+        await testRoundtrip("string", "boomerang", "boomerang");
+        await testRoundtrip(
+            "string with weird characters",
+            "a\n\r\t ",
+            "a\n\r\t "
+        );
+        await testRoundtrip(
+            "string with unicode",
+            "žluťoučký kůň úpěl ďábelské ódy",
+            "žluťoučký kůň úpěl ďábelské ódy"
+        );
+
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L211C2-L213C51
+        await testRoundtrip("zero number", 0, 0);
+        await testRoundtrip("integer number", -2023, -2023);
+        await testRoundtrip("float number", 12.345, 12.345);
+
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L216C9-L220C97
+        await testRoundtrip("zero integer", 0n, 0, "number");
+        await testRoundtrip("small integer", -42n, -42, "number");
+        await testRoundtrip(
+            "largest safe integer",
+            9007199254740991n,
+            9007199254740991,
+            "number"
+        );
+
+        await test.step(
+            "max 64-bit bigint",
+            withClient(async (c) => {
+                const rs = await c.execute({
+                    sql: "SELECT ?||''",
+                    args: [9223372036854775807n],
+                });
+                assertEquals(rs.rows[0][0], "9223372036854775807");
+            })
+        );
+
+        await test.step(
+            "min 64-bit bigint",
+            withClient(async (c) => {
+                const rs = await c.execute({
+                    sql: "SELECT ?||''",
+                    args: [-9223372036854775808n],
+                });
+                assertEquals(rs.rows[0][0], "-9223372036854775808");
+            })
+        );
+    });
+
+    await test.step("ResultSet.toJSON()", async (test) => {
+        await test.step({
+            name: "bigint row value",
+            ignore: true,
+            fn: withClient(
+                async (c) => {
+                    const rs = await c.execute("SELECT 42");
+                    const json = rs.toJSON();
+                    assertEquals(json["rows"], [["42"]]);
+                },
+                { intMode: "bigint" }
+            ),
+        });
     });
 });
