@@ -12,6 +12,7 @@ footer {
     --color-text: 129, 54%, 5%;
     --color-background: 127, 60%, 97%;
 
+    /* font-family: system-ui */
     --font-text: "Open Sans", sans-serif;
     --font-accent: "Josefin Sans", sans-serif;
 
@@ -34,7 +35,6 @@ body {
     font-size: var(--font-300);
     /* kevin powell recommendation */
     line-height: 1.6;
-    /* font-family: system-ui */
     font-family: var(--font-text);
     color: hsl(var(--color-text));
     background-color: hsl(var(--color-background));
@@ -61,6 +61,17 @@ h3 {
     margin-top: var(--flow-space, 1em);
 }
 
+.main-layout {
+    min-height: 100vh;
+    min-width: 100dvh;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.list-hidden {
+    list-style: none;
+}
 .sr-only {
     border: 0;
     padding: 0;
@@ -77,4 +88,8 @@ h3 {
     clip-path: inset(50%);
     /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
     white-space: nowrap;
+}
+.logo {
+    /* height: auto; */
+    max-height: 32px;
 }

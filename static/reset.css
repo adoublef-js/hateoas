@@ -5,8 +5,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
-    /* outline: 1px solid rgb(97, 98, 97) !important; */
-    /* background-color: rgb(0 100 0 / .05) !important; */
+    background-color: hsl(120 61% 50% / 0.2) !important;
 }
 
 /* Remove default margin */
