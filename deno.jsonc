@@ -1,7 +1,7 @@
 {
     "tasks": {
         "dev": "deno run -A --unstable --watch main.tsx",
-        "test": "deno test --unstable --allow-env --allow-read --allow-run --parallel"
+        "test": "deno test -A --unstable --parallel"
     },
     "imports": {
         "deps": "./deps.ts",
