@@ -11,6 +11,8 @@ import { AppEnv } from "lib/app_env.ts";
 import { oauthClient, session } from "lib/iam.tsx";
 import { Home } from "components/Home.tsx";
 import { Dashboard } from "components/Dashboard.tsx";
+// import { createClient } from "lib/libsql/mod.ts";
+import { createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
 
 const client = createAuth0OAuth2Client({
     redirectUri: `${Deno.env.get("APP_URL")}/i/callback`,
@@ -24,12 +26,18 @@ logoutUrl.searchParams.append("returnTo", Deno.env.get("APP_URL")!);
 logoutUrl.searchParams.append("client_id", Deno.env.get("AUTH0_CLIENT_ID")!);
 
 if (import.meta.main) {
+    const dbUrl = Deno.env.get("DATABASE_URL")!;
+    const authToken = Deno.env.get("TURSO_AUTH_TOKEN");
+    console.log({ dbUrl, authToken });
+    const db = createClient({ url: dbUrl, authToken });
+
     const app = new Hono<AppEnv>();
 
     app.onError((err, { html }) => {
         if (err instanceof HTTPException) {
             return err.getResponse();
         }
+        console.log(err);
         // TODO if this is called then the client is very smart
         // get them to help make the app better
         return html("I don't know how you down here, please contact me!");
@@ -47,6 +55,12 @@ if (import.meta.main) {
             ? html(<Dashboard siteData={{ title: "Welcome, Deno!" }} />)
             : html(<Home siteData={{ title: "Deno 💛 Htmx" }} />)
     );
+
+    app.get("/turso", async (ctx) => {
+        const rs = await db.execute("SELECT 42;");
+
+        return ctx.json(rs.rows[0]);
+    });
 
     app.route("/i", iam);
     app.route("/count", counters);
