@@ -21,9 +21,3 @@ function _createClient(config: ExpandedConfig) {
     return _createWebClient(config);
 }
 
-export function tursoClient(c: Client): MiddlewareHandler<AppEnv> {
-    return async ({ set }, next) => {
-        set("dbClient", c);
-        await next();
-    };
-}

@@ -6,13 +6,21 @@ import {
     serveStatic,
     HTTPException,
     logger,
+    MiddlewareHandler,
 } from "deps";
 import { AppEnv } from "lib/app_env.ts";
 import { oauthClient, session } from "lib/iam.tsx";
 import { Home } from "components/Home.tsx";
 import { Dashboard } from "components/Dashboard.tsx";
-import { tursoClient } from "lib/libsql/mod.ts";
-import { createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
+import { Client, createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
+
+/* TODO find home for this */
+export function tursoClient(c: Client): MiddlewareHandler<AppEnv> {
+    return async ({ set }, next) => {
+        set("dbClient", c);
+        await next();
+    };
+}
 
 const client = createAuth0OAuth2Client({
     redirectUri: `${Deno.env.get("APP_URL")}/i/callback`,
