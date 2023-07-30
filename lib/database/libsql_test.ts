@@ -40,33 +40,48 @@ function withClient(
 
 function createClient(config: Config): Client {
     // TODO
-    const path = ":memory:"; //config.
+    const path = "file:memdb1?mode=memory&cache=shared"; // https://www.sqlite.org/inmemorydb.html
     const options = {};
     return new Sqlite3Client(path, options, config.intMode!);
 }
 
 // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts
 Deno.test("Sqlite3Client()", async (test) => {
-    // await test.step(
-    //     "should connect to database",
-    //     withClient(async (c) => {})
-    // );
+    await test.step(
+        "should connect to database",
+        // TODO check that it works with real file
+        withClient(async () => {})
+    );
 
     await test.step("execute()", async (test) => {
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L85
         await test.step(
-            "create a table",
+            "return 42",
             withClient(async (c) => {
-                // should test with an already created table with rows
                 const rs = await c.execute("SELECT 42");
                 assertEquals(rs.columns.length, 1);
+                assertEquals(rs.rows.length, 1);
+            })
+        );
+    });
+
+    await test.step("executeMultiple()", async (test) => {
+        // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts#L792
+        await test.step(
+            "multiple statements",
+            withClient(async (c) => {
+                await c.executeMultiple(`
+                    DROP TABLE IF EXISTS t;
+                    CREATE TABLE t (a);
+                    INSERT INTO t VALUES (1), (2), (4), (8);
+                `);
+
+                const rs = await c.execute("SELECT SUM(a) FROM t");
+                assertEquals(rs.rows[0][0], 15);
             })
         );
     });
 });
-
-// function createClient({}) {
-
-// }
 
 export class Sqlite3Client implements Client {
     #path: string;
@@ -88,6 +103,16 @@ export class Sqlite3Client implements Client {
         const db = new DB(this.#path, this.#options);
         try {
             return await executeStmt(db, stmt, this.#intMode);
+        } finally {
+            db.close();
+        }
+    }
+
+    async executeMultiple(sql: string): Promise<void> {
+        this.#checkNotClosed();
+        const db = new DB(this.#path, this.#options);
+        try {
+            return await executeMultiple(db, sql);
         } finally {
             db.close();
         }
@@ -116,10 +141,6 @@ export class Sqlite3Client implements Client {
     transaction(
         mode?: unknown
     ): Promise<import("https://esm.sh/@libsql/client@0.3.1/web").Transaction> {
-        throw new Error("Method not implemented.");
-    }
-    // TODO
-    executeMultiple(sql: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }
@@ -156,22 +177,16 @@ async function executeStmt(
         // https://github.com/libsql/libsql-client-ts/blob/main/src/sqlite3.ts#L214-L219
         if (returnsData) {
             const columns = sqlStmt.columns().map((col) => col.name);
-
-            //  export type QueryParameterSet =
-            //   | Record<string, QueryParameter>
-            //   | Array<QueryParameter>;
-
             const rows = sqlStmt.all(args).map((sqlRow) => {
                 return rowFromSql(sqlRow as Array<unknown>, columns, intMode);
             });
-            const _ = sqlStmt.finalize();
 
             // https://github.com/libsql/libsql-client-ts/blob/main/src/sqlite3.ts#L226
-            const rowsAffected = 0;
-            const lastInsertRowid = undefined;
             // rs.columns == [ 'uid', 'email' ]
             // rs.rows[0] == [ 'uid1', 'foo@bar.com' ]
             // rs.rows[1] == [ 'uid2', 'baz@bar.com' ]
+            const rowsAffected = 0;
+            const lastInsertRowid = undefined;
             return new ResultSetImpl(
                 columns,
                 rows,
@@ -180,7 +195,6 @@ async function executeStmt(
             );
         } else {
             // const info = sqlStmt.run(args);
-            const _ = sqlStmt.finalize();
 
             const rowsAffected = 0; //info.changes;
             const lastInsertRowid = undefined; //BigInt(info.lastInsertRowid);
@@ -237,6 +251,14 @@ function valueFromSql(sqlValue: unknown, intMode: IntMode): Value {
 
 const minSafeBigint = -9007199254740991n;
 const maxSafeBigint = 9007199254740991n;
+
+function executeMultiple(db: DB, sql: string): void {
+    try {
+        db.execute(sql);
+    } catch (e) {
+        throw mapSqliteError(e);
+    }
+}
 
 function mapSqliteError(e: unknown): unknown {
     if (e instanceof SqliteError) {
