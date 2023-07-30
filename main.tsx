@@ -11,8 +11,8 @@ import { AppEnv } from "lib/app_env.ts";
 import { oauthClient, session } from "lib/iam.tsx";
 import { Home } from "components/Home.tsx";
 import { Dashboard } from "components/Dashboard.tsx";
-// import { createClient } from "lib/libsql/mod.ts";
-import { createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
+import { createClient, tursoClient } from "lib/libsql/mod.ts";
+// import { createClient } from "https://esm.sh/@libsql/client@0.3.1/web";
 
 const client = createAuth0OAuth2Client({
     redirectUri: `${Deno.env.get("APP_URL")}/i/callback`,
@@ -28,7 +28,7 @@ logoutUrl.searchParams.append("client_id", Deno.env.get("AUTH0_CLIENT_ID")!);
 if (import.meta.main) {
     const dbUrl = Deno.env.get("DATABASE_URL")!;
     const authToken = Deno.env.get("TURSO_AUTH_TOKEN");
-    console.log({ dbUrl, authToken });
+
     const db = createClient({ url: dbUrl, authToken });
 
     const app = new Hono<AppEnv>();
@@ -47,7 +47,13 @@ if (import.meta.main) {
         return c.text("Custom 404 Message", 404);
     });
 
-    app.use("*", logger(), oauthClient(client, logoutUrl), session());
+    app.use(
+        "*",
+        logger(),
+        tursoClient(db),
+        oauthClient(client, logoutUrl),
+        session()
+    );
 
     app.get("/", ({ html, get }) =>
         // TODO app profile

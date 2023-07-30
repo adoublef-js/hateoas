@@ -5,6 +5,8 @@ import {
     expandConfig,
     ExpandedConfig,
 } from "https://esm.sh/@libsql/client@0.3.1/lib-esm/config.js";
+import { MiddlewareHandler } from "deps";
+import { AppEnv } from "lib/app_env.ts";
 
 export function createClient(config: Config): Client {
     return _createClient(expandConfig(config, true));
@@ -17,4 +19,11 @@ function _createClient(config: ExpandedConfig) {
     }
 
     return _createWebClient(config);
+}
+
+export function tursoClient(c: Client): MiddlewareHandler<AppEnv> {
+    return async ({ set }, next) => {
+        set("dbClient", c);
+        await next();
+    };
 }
