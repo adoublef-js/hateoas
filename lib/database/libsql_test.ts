@@ -17,6 +17,7 @@ import {
     Config,
 } from "https://esm.sh/@libsql/client@0.3.1";
 import { encode } from "https://deno.land/std@0.196.0/encoding/base64.ts";
+import { assertEquals } from "https://deno.land/std@0.195.0/assert/assert_equals.ts";
 
 function withClient(
     f: (c: Client) => Promise<void>,
@@ -24,7 +25,11 @@ function withClient(
 ): () => Promise<void> {
     return async () => {
         // TODO
-        const c = createClient({ url: "__url__", ...extraConfig });
+        const c = createClient({
+            url: "__url__",
+            intMode: "number",
+            ...extraConfig,
+        });
         try {
             await f(c);
         } finally {
@@ -42,10 +47,19 @@ function createClient(config: Config): Client {
 
 // https://github.com/libsql/libsql-client-ts/blob/main/src/__tests__/client.test.ts
 Deno.test("Sqlite3Client()", async (test) => {
+    // await test.step(
+    //     "should connect to database",
+    //     withClient(async (c) => {})
+    // );
+
     await test.step("execute()", async (test) => {
         await test.step(
-            "should connect to database",
-            withClient(async (c) => {})
+            "create a table",
+            withClient(async (c) => {
+                // should test with an already created table with rows
+                const rs = await c.execute("SELECT 42");
+                assertEquals(rs.columns.length, 1);
+            })
         );
     });
 });
@@ -134,8 +148,8 @@ async function executeStmt(
 
     // https://esm.sh/gh/libsql/libsql-client-ts/src/util.ts
 
+    const sqlStmt = db.prepareQuery(sql);
     try {
-        const sqlStmt = db.prepareQuery(sql);
         // make safe for integers
         let returnsData = true;
         // NOTE if raw() then don't return data
@@ -150,6 +164,8 @@ async function executeStmt(
             const rows = sqlStmt.all(args).map((sqlRow) => {
                 return rowFromSql(sqlRow as Array<unknown>, columns, intMode);
             });
+            const _ = sqlStmt.finalize();
+
             // https://github.com/libsql/libsql-client-ts/blob/main/src/sqlite3.ts#L226
             const rowsAffected = 0;
             const lastInsertRowid = undefined;
@@ -164,12 +180,16 @@ async function executeStmt(
             );
         } else {
             // const info = sqlStmt.run(args);
+            const _ = sqlStmt.finalize();
+
             const rowsAffected = 0; //info.changes;
             const lastInsertRowid = undefined; //BigInt(info.lastInsertRowid);
             return new ResultSetImpl([], [], rowsAffected, lastInsertRowid);
         }
     } catch (e) {
         throw mapSqliteError(e);
+    } finally {
+        sqlStmt.finalize();
     }
 }
 
@@ -209,7 +229,7 @@ function valueFromSql(sqlValue: unknown, intMode: IntMode): Value {
         } else {
             throw new Error("Invalid value for IntMode");
         }
-    } else if (sqlValue instanceof Buffer) {
+    } else if (sqlValue instanceof Object && sqlValue instanceof Buffer) {
         return sqlValue.buffer;
     }
     return sqlValue as Value;
