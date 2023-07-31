@@ -1,11 +1,4 @@
-/* NOTE This module is only here as I can't seem to locate the NodeJS version */
-import { encode } from "https://deno.land/std@0.176.0/encoding/hex.ts";
-import {
-    ResultSet,
-    Value,
-    Row,
-    TransactionMode,
-} from "https://esm.sh/@libsql/client@0.3.1";
+import { ResultSet, Row, Value, TransactionMode, encode } from "dev_deps";
 
 export const supportedUrlLink =
     "https://github.com/libsql/libsql-client-ts#supported-urls";

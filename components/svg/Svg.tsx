@@ -1,9 +1,8 @@
-import { Component } from "components/component.ts";
-import { memo } from "deps";
+import { memo, HtmlEscapedString } from "deps";
 
 export type SVGProps = {
     viewBox: [number, number, number, number];
-    children: Component | Component[];
+    children: HtmlEscapedString | HtmlEscapedString[];
     class?: string;
     styles?: string;
     width?: number;

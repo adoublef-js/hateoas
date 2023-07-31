@@ -2,12 +2,12 @@ import {
     getSessionId,
     getSessionAccessToken,
     OAuth2Client,
-    MiddlewareHandler,
     Status,
+    MiddlewareHandler,
 } from "deps";
 import { AppEnv } from "lib/app_env.ts";
 
-export function oauthClient(
+export function oauth(
     client: OAuth2Client,
     logoutUrl: URL
 ): MiddlewareHandler<AppEnv> {

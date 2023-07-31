@@ -1,5 +1,4 @@
-import { OAuth2Client } from "deps";
-import { Client } from "https://esm.sh/@libsql/client@0.3.1";
+import { OAuth2Client, LibSqlClient } from "deps";
 
 export type AccessTokenEnv = {
     Variables: {
@@ -21,7 +20,7 @@ export type OAuth2Env = {
 
 export type DatabaseEnv = {
     Variables: {
-        dbClient: Client;
+        dbClient: LibSqlClient;
     };
 };
 

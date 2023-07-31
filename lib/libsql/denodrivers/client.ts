@@ -1,42 +1,36 @@
-// https://github.com/denodrivers/sqlite3
+import { LibSqlClient } from "deps";
 import {
+    Config,
+    expandConfig,
+    ExpandedConfig,
+    InStatement,
+    IntMode,
+    InValue,
+    LibsqlError,
+    ResultSet,
+    Row,
+    Transaction,
+    TransactionMode,
+    Value,
+    Database,
     BindParameters,
     BindValue,
-    Database,
     DatabaseOpenOptions,
     SqliteError,
-} from "https://deno.land/x/sqlite3@0.9.1/mod.ts";
-import {
-    InStatement,
-    ResultSet,
-    TransactionMode,
-    Transaction,
-    IntMode,
-    LibsqlError,
-    Value,
-    Row,
-    Config,
-    Client,
-    InValue,
-} from "https://esm.sh/@libsql/client@0.3.1";
-
-import { Buffer } from "node:buffer";
+    Buffer,
+} from "dev_deps";
 import {
     ResultSetImpl,
     supportedUrlLink,
     transactionModeToBegin,
 } from "lib/libsql/utils.ts";
-import {
-    ExpandedConfig,
-    expandConfig,
-} from "https://esm.sh/@libsql/client@0.3.1/lib-esm/config.js";
 
-export function createClient(config: Config): Client {
+export function createClient(config: Config): LibSqlClient {
     return _createClient(expandConfig(config, true));
 }
 
 /** @private */
-export function _createClient(config: ExpandedConfig): Client {
+export function _createClient(config: ExpandedConfig): LibSqlClient {
     if (config.scheme !== "file") {
         throw new LibsqlError(
             `URL scheme ${JSON.stringify(
@@ -90,7 +84,7 @@ export function _createClient(config: ExpandedConfig): Client {
     return new Sqlite3Client(path, options, config.intMode);
 }
 
-export class Sqlite3Client implements Client {
+export class Sqlite3Client implements LibSqlClient {
     #path: string;
     #options: DatabaseOpenOptions;
     #intMode: IntMode;

@@ -1,4 +1,4 @@
-import { assertEquals, assertThrows } from "deps";
+import { assertEquals, assertThrows } from "dev_deps";
 import { Id } from "lib/id/cuid_2.ts";
 
 Deno.test("Id()", async (test) => {

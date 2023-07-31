@@ -1,4 +1,4 @@
-import { assert } from "deps";
+import { assert } from "dev_deps";
 import z, { Parser } from "lib/parse/parser.ts";
 
 Deno.test("Parser()", async (test) => {

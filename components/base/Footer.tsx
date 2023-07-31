@@ -1,5 +1,4 @@
-import { memo } from "deps";
-import { Component } from "components/component.ts";
+import { HtmlEscapedString, memo } from "deps";
 import { Deno, GitHub } from "components/svg/Svg.tsx";
 
 const SVG = ({
@@ -8,7 +7,7 @@ const SVG = ({
     ...props
 }: {
     viewBox: [number, number, number, number];
-    children: Component | Component[];
+    children: HtmlEscapedString | HtmlEscapedString[];
     class?: string;
     styles?: string;
     width?: number;

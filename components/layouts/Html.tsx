@@ -1,11 +1,10 @@
-import { html } from "deps";
-import { Component } from "components/component.ts";
+import { html, HtmlEscapedString } from "deps";
 
 export type LayoutProps = {
     title?: string;
     // add more options later
     lang?: "en";
-    children?: Component | Component[];
+    children?: HtmlEscapedString | HtmlEscapedString[];
 };
 
 export const Layout = (props: LayoutProps) => html`<!DOCTYPE html>
@@ -47,5 +46,5 @@ export const Html = ({
     children,
     ...siteData
 }: {
-    children?: Component | Component[];
+    children?: HtmlEscapedString | HtmlEscapedString[];
 } & LayoutProps) => <Layout {...siteData}>{children}</Layout>;

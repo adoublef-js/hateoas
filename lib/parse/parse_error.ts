@@ -20,7 +20,7 @@ export class ParseError extends Error {
     }
 }
 
-function createParserErrorCondtructor(code: ErrorCode): typeof ParseError {
+function createParserErrorConstructor(code: ErrorCode): typeof ParseError {
     const name = `${Code[code]}Error`;
     const ErrorCtor = class extends ParseError {
         constructor(message = CODE_TEXT[code], options?: ParseErrorOptions) {
@@ -46,7 +46,7 @@ export const errors: Record<ErrorCodeKeys, typeof ParseError> = {} as Record<
 >;
 
 for (const [key, value] of Object.entries(ERROR_CODE_MAP)) {
-    errors[key as ErrorCodeKeys] = createParserErrorCondtructor(value);
+    errors[key as ErrorCodeKeys] = createParserErrorConstructor(value);
 }
 
 export function createParserError(

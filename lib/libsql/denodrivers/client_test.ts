@@ -1,22 +1,18 @@
-// https://github.com/denodrivers/sqlite3
-import { assertRejects } from "https://deno.land/std@0.195.0/assert/assert_rejects.ts";
-import { assertStrictEquals } from "https://deno.land/std@0.195.0/assert/assert_strict_equals.ts";
+import { LibSqlClient } from "deps";
 import {
+    assertRejects,
     assertArrayIncludes,
     assertEquals,
-} from "https://deno.land/std@0.195.0/assert/mod.ts";
-import {
     LibsqlError,
     Config,
-    Client,
     InValue,
     IntMode,
     Value,
-} from "https://esm.sh/@libsql/client@0.3.1";
+} from "dev_deps";
 import { createClient } from "lib/libsql/denodrivers/client.ts";
 
 function withClient(
-    f: (c: Client) => Promise<void>,
+    f: (c: LibSqlClient) => Promise<void>,
     extraConfig: Partial<Config> = {}
 ): () => Promise<void> {
     return async () => {
