@@ -4,12 +4,12 @@ import {
     serveStatic,
     HTTPException,
     logger,
-    createLibSqlClient,
 } from "deps";
 import { iam } from "api/iam/mod.ts";
 import { counters } from "api/counters/mod.tsx";
 import { AppEnv } from "lib/app_env.ts";
 import { oauth, session } from "lib/iam.tsx";
+import { createClient as createLibSqlClient } from "lib/libsql/create_client.ts";
 import { database } from "lib/libsql/mod.ts";
 import { Home } from "components/Home.tsx";
 import { Dashboard } from "components/Dashboard.tsx";
@@ -26,9 +26,7 @@ const logoutUrl = new URL(`https://${Deno.env.get("AUTH0_DOMAIN")}/v2/logout`);
 logoutUrl.searchParams.append("returnTo", Deno.env.get("APP_URL")!);
 logoutUrl.searchParams.append("client_id", Deno.env.get("AUTH0_CLIENT_ID")!);
 
-const dbUrl = Deno.env.get("DATABASE_URL")!;
-const authToken = Deno.env.get("TURSO_AUTH_TOKEN");
-const db = createLibSqlClient({ url: dbUrl, authToken });
+const db = createLibSqlClient({ url: "file:hateoas.db" });
 
 if (import.meta.main) {
     const app = new Hono<AppEnv>();
@@ -37,9 +35,8 @@ if (import.meta.main) {
         if (err instanceof HTTPException) {
             return err.getResponse();
         }
+
         console.log(err);
-        // TODO if this is called then the client is very smart
-        // get them to help make the app better
         return html("I don't know how you down here, please contact me!");
     });
 
