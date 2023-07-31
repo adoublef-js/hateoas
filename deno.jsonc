@@ -1,10 +1,11 @@
 {
     "tasks": {
-        "dev": "deno run -A --unstable --watch main.tsx",
+        "dev": "deno run -A --unstable --watch dev_main.tsx",
         "test": "deno test -A --unstable --parallel"
     },
     "imports": {
         "deps": "./deps.ts",
+        "dev_deps": "./dev_deps.ts",
         "components/": "./components/",
         "layouts/": "./layouts/",
         "lib/": "./lib/",
