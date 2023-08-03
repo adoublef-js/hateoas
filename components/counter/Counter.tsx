@@ -1,5 +1,6 @@
 type CounterProps = {
     value: number;
+    href?: string;
 };
 
 export const Counter = ({ value }: CounterProps) => {
@@ -7,7 +8,7 @@ export const Counter = ({ value }: CounterProps) => {
         <div>
             <p>counter value {value}</p>
             <button
-                hx-get={`/count/${value + 1}`}
+                hx-get={`/c/${value + 1}`}
                 hx-target="closest div"
                 hx-swap="outerHTML"
             >
