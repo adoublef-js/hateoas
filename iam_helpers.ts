@@ -19,9 +19,10 @@ params.append("client_id", oauthClient.config.clientId);
 const logoutUrl = new URL(`v2/logout?${params}`, oauthDomain);
 const audience = Deno.env.get("AUTH0_AUDIENCE")?.split(",");
 
-export const oauthConfig = {
-    client: oauthClient,
+export const iamHelpers = {
+    oauthClient: oauthClient,
     jwks,
-    aud: audience,
+    jwksUrl,
+    audience,
     logoutUrl,
 } as const;
