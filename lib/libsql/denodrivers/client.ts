@@ -23,7 +23,7 @@ import {
     ResultSetImpl,
     supportedUrlLink,
     transactionModeToBegin,
-} from "lib/libsql/utils.ts";
+} from "../utils.ts";
 
 export function createClient(config: Config): LibSqlClient {
     return _createClient(expandConfig(config, true));
