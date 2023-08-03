@@ -1,27 +1,41 @@
-import { OAuth2Client, LibSqlClient } from "deps";
+import {
+    LibSqlClient,
+    OAuth2Client,
+    createRemoteJWKSet,
+    JWTPayload,
+} from "deps";
 
-export type AccessTokenEnv = {
-    Variables: {
-        accessToken: string | null;
-    };
+type WithVariables<V extends Record<string, unknown> = {}> = {
+    Variables: V;
 };
 
-export type SessionEnv = {
-    Variables: {
-        sessionId: string | undefined;
-    };
-};
+export type AccessTokenEnv = WithVariables<{
+    accessToken?: { raw: string; payload: JWTPayload & { scope?: string } };
+}>;
 
-export type OAuth2Env = {
-    Variables: {
-        oauth2: { client: OAuth2Client; logoutUrl: URL };
-    };
-};
+export type SessionEnv = WithVariables<{
+    sessionId: string | undefined;
+}>;
 
-export type DatabaseEnv = {
-    Variables: {
-        dbClient: LibSqlClient;
+export type IamEnv = WithVariables<{
+    iam: {
+        client: OAuth2Client;
+        logoutUrl: URL;
+        jwtAuth: ReturnType<typeof createRemoteJWKSet>;
+        aud?: string[];
     };
-};
+}>;
 
-export type AppEnv = AccessTokenEnv & OAuth2Env & SessionEnv & DatabaseEnv;
+export type DatabaseEnv = WithVariables<{
+    db: LibSqlClient;
+}>;
+
+export type JwtAuthEnv = WithVariables<{
+    jwtAuth: ReturnType<typeof createRemoteJWKSet>;
+}>;
+
+export type AppEnv = AccessTokenEnv &
+    IamEnv &
+    SessionEnv &
+    DatabaseEnv &
+    JwtAuthEnv;
