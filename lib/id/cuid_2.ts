@@ -1,5 +1,6 @@
 import z from "lib/parse/parser.ts";
 
+/** Based on Cuid2 */
 export class Id {
     #value: string;
     constructor(id?: string) {

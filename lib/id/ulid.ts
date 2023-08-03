@@ -3,6 +3,7 @@ import { assert } from "https://deno.land/std@0.196.0/assert/assert.ts";
 
 // https://github.com/ulid/spec
 // https://github.com/kt3k/ulid/blob/main/mod.ts
+/** Based on ulid */
 export class Id {
     #value: string;
 
