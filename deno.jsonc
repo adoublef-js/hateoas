@@ -15,10 +15,9 @@
     },
     "compilerOptions": {
         // "lib": [
-        // "dom",
-        // "dom.iterable",
-        // "dom.asynciterable",
-        // "deno.ns"
+            // "dom",
+            // "dom.iterable",
+            // "dom.asynciterable",
         // ],
         "jsx": "react-jsx",
         // "jsxFragmentFactory": "Fragment",
