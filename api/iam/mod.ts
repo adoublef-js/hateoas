@@ -1,26 +1,30 @@
 import { Hono, signIn, handleCallback, signOut } from "deps";
-import { OAuth2Env } from "lib/app_env.ts";
+import { IamEnv } from "lib/app_env.ts";
 
-export const iam = new Hono<OAuth2Env>();
+export const iam = new Hono<IamEnv>();
 
 iam.get("/signin", async ({ req, get, header, redirect }) => {
-    const response = await signIn(req.raw, get("oauth2").client);
+    const { aud, client } = get("iam");
+    const response = await signIn(req.raw, client, {
+        urlParams: { audience: aud?.join(",")! },
+    });
 
-    header("set-cookie", response.headers.getSetCookie()[0]);
+    header("set-cookie", response.headers.get("set-cookie")!);
     return redirect(response.headers.get("location")!, response.status);
 });
 
 iam.get("/callback", async ({ req, get, header, redirect }) => {
-    const { response } = await handleCallback(req.raw, get("oauth2").client);
+    const { client } = get("iam");
+    const { response } = await handleCallback(req.raw, client);
 
-    header("set-cookie", response.headers.getSetCookie()[0]);
+    header("set-cookie", response.headers.get("set-cookie")!);
     return redirect(response.headers.get("location")!, response.status);
 });
 
 iam.get("/signout", async ({ req, get, header, redirect }) => {
-    const { logoutUrl } = get("oauth2");
+    const { logoutUrl } = get("iam");
     const response = await signOut(req.raw, logoutUrl.toString());
 
-    header("set-cookie", response.headers.getSetCookie()[0]);
+    header("set-cookie", response.headers.get("set-cookie")!);
     return redirect(response.headers.get("location")!, response.status);
 });

@@ -1,16 +1,19 @@
 import { Hono } from "deps";
 import { Counter } from "components/counter/Counter.tsx";
 import { AppEnv } from "lib/app_env.ts";
-import { authorization } from "lib/iam.tsx";
+import { accessToken, authorized } from "api/iam/middleware.ts";
+import { getCount } from "api/counters/dao.ts";
+// import { accessToken } from "lib/iam.tsx";
 
 export const counters = new Hono<AppEnv>();
 
-counters.get("/:value", authorization(), async ({ req, html, get }) => {
-    const value = parseInt(req.param("value"));
-    const rs = await get("dbClient").execute({
-        sql: "SELECT ?",
-        args: [value],
-    });
+counters.get(
+    "/:value",
+    authorized("write:profile"),
+    async ({ req, html, get }) => {
+        const param = parseInt(req.param("value"));
+        const value = await getCount(get("db"), isNaN(param) ? 0 : param);
 
-    return html(<Counter value={Number(rs.rows[0][0])} />);
-});
+        return html(<Counter value={value} />);
+    }
+);
