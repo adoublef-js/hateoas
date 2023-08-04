@@ -1,6 +1,6 @@
 import { Hono, serveStatic, HTTPException, logger } from "deps";
 import { createClient as createClient } from "lib/libsql/create_client.ts";
-import { NotFound, Home, Dashboard, Settings, About } from "components/mod.ts";
+import { NotFound, Home, Dashboard } from "components/mod.ts";
 import { iamHelpers } from "./iam_helpers.ts";
 import { accessToken, oauth } from "./iam/middleware.ts";
 import { iam } from "./iam/mod.ts";
