@@ -1,18 +1,18 @@
-import { Html, SiteData } from "components/layouts/Html.tsx";
-import { Header, Footer } from "components/base/mod.ts";
+import { Html, SiteData, Header, Footer } from "components/base/mod.ts";
 
-type AboutProps = SiteData;
+type DashboardProps = SiteData;
 
-export function About(props: AboutProps) {
+export function Dashboard(props: DashboardProps) {
     return (
         <Html {...props.siteData}>
             <Header />
             <main class="wrapper flow">
                 <header>
-                    <h1>About</h1>
+                    <h1>Welcome 👋🏿</h1>
                 </header>
                 <section>
                     <div>
+                        <p>Thank you for signing up! 😊</p>
                         <a href="/i/signout">Sign out</a>
                     </div>
                 </section>

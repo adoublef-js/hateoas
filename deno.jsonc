@@ -4,20 +4,23 @@
         "test": "deno test -A --unstable --parallel"
     },
     "imports": {
-        "deps": "./deps.ts",
-        "dev_deps": "./dev_deps.ts",
+        "$hono/": "https://deno.land/x/hono@v3.3.4/",
+        "$deno_kv_oauth/": "https://deno.land/x/deno_kv_oauth@v0.3.0/",
+        "$types": "https://esm.sh/type-fest@4.1.0",
+        "hono/jsx": "https://esm.sh/hono@3.3.4/jsx",
+        "hono/jsx/": "https://esm.sh/hono@3.3.4/jsx/",
         "components/": "./components/",
         "layouts/": "./layouts/",
         "lib/": "./lib/",
         "api/": "./api/",
-        "hono/jsx": "https://esm.sh/hono@3.3.4/jsx",
-        "hono/jsx/": "https://esm.sh/hono@3.3.4/jsx/"
+        "deps": "./deps.ts",
+        "dev_deps": "./dev_deps.ts"
     },
     "compilerOptions": {
         // "lib": [
-            // "dom",
-            // "dom.iterable",
-            // "dom.asynciterable",
+        // "dom",
+        // "dom.iterable",
+        // "dom.asynciterable",
         // ],
         "jsx": "react-jsx",
         // "jsxFragmentFactory": "Fragment",

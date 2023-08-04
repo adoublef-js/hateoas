@@ -1,0 +1,97 @@
+html {
+    color-scheme: light dark;
+}
+
+header,
+main,
+footer {
+    min-height: 64px;
+}
+
+:root {
+    --color-text: 129, 54%, 5%;
+    --color-background: 127, 60%, 97%;
+
+    /* font-family: system-ui */
+    --font-text: "Open Sans", sans-serif;
+    --font-accent: "Josefin Sans", sans-serif;
+
+    --font-300: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
+    --font-400: clamp(1.35rem, calc(1.2rem + 0.73vw), 1.77rem);
+    --font-500: clamp(1.62rem, calc(1.31rem + 1.53vw), 2.5rem);
+    --font-600: clamp(1.94rem, calc(1.39rem + 2.77vw), 3.53rem);
+    --font-700: clamp(2.33rem, calc(1.41rem + 4.63vw), 5rem);
+    --font-800: clamp(2.8rem, calc(1.32rem + 7.42vw), 7.07rem);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-text: 0, 0%, 98%;
+        --color-background: 0, 0%, 2%;
+    }
+}
+
+body {
+    font-size: var(--font-300);
+    /* kevin powell recommendation */
+    line-height: 1.6;
+    font-family: var(--font-text);
+    color: hsl(var(--color-text));
+    background-color: hsl(var(--color-background));
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-accent);
+    /* NOTE smaller line height for larger font sizes */
+    line-height: 1.1;
+    /* NOTE https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap */
+    text-wrap: balance;
+}
+
+.wrapper {
+    /* ch based on reading line */
+    width: min(100% - 3rem, 55ch);
+    margin-inline: auto;
+}
+
+.flow>*+* {
+    /* space is now dynamic */
+    margin-top: var(--flow-space, 1em);
+}
+
+.main-layout {
+    min-height: 100vh;
+    min-width: 100dvh;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.list-hidden {
+    list-style: none;
+}
+
+.sr-only {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    /* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
+    clip: rect(1px 1px 1px 1px);
+    /* maybe deprecated but we need to support legacy browsers */
+    clip: rect(1px, 1px, 1px, 1px);
+    /* modern browsers, clip-path works inwards from each corner */
+    clip-path: inset(50%);
+    /* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
+    white-space: nowrap;
+}
+
+.logo {
+    /* height: auto; */
+    max-height: 32px;
+}

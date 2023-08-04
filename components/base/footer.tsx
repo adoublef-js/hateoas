@@ -1,5 +1,5 @@
 import { HtmlEscapedString, memo } from "deps";
-import { Deno, GitHub } from "components/svg/Svg.tsx";
+import { Deno, GitHub } from "components/svg/mod.tsx";
 
 const SVG = ({
     viewBox,

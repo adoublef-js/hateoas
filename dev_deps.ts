@@ -6,12 +6,7 @@ export {
     assertRejects,
     assertArrayIncludes,
 } from "https://deno.land/std@0.196.0/assert/mod.ts";
-export {
-    type Env,
-    type Context,
-    type Next,
-    type Handler,
-} from "https://deno.land/x/hono@v3.3.4/mod.ts";
+export { type Env, type Context, type Next, type Handler } from "$hono/mod.ts";
 export {
     type ResultSet,
     type Value,

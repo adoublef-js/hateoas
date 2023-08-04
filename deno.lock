@@ -329,6 +329,7 @@
     "https://esm.sh/drizzle-orm@0.27.2/libsql": "7e19989b2d1675e12129dc3801baeab7e4bd48c9d6fc393c216a3b03b0315e69",
     "https://esm.sh/drizzle-orm@0.27.2/sqlite-core": "93be1cf0aca8be8b39e879fd25c33edf67845aa8ffb97fc914cb3c5caed1df6b",
     "https://esm.sh/hono@3.3.4/jsx/jsx-runtime": "832becce0a99333923163bf0d41261d1033c1ecf878d090b4168787a06fdaa29",
+    "https://esm.sh/type-fest@4.1.0": "fabf6997a3adf11e45d11e3c4d58d0634ab98f9d72f3116f3694123818ccd457",
     "https://esm.sh/v129/@libsql/client@0.3.1/denonext/client.mjs": "09c5d5b5deb65f342f31a1135c28e674ab6292fe8759c61c1dc9eaa13c2c203a",
     "https://esm.sh/v129/@libsql/client@0.3.1/denonext/http.js": "cd4fdfadc62c690bd57e383162b3e46b0af268c11df2be7e6f6d10895abe2fba",
     "https://esm.sh/v129/@libsql/client@0.3.1/denonext/ws.js": "508f51308fa5833dd7e0e570fc814a725758c92d4d4af2fc47b95e03d0d6d80d",

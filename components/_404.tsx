@@ -1,5 +1,4 @@
-import { Html, SiteData } from "components/layouts/Html.tsx";
-import { Header, Footer } from "components/base/mod.ts";
+import { Html, SiteData, Header, Footer } from "components/base/mod.ts";
 
 type NotFoundProps = SiteData;
 
