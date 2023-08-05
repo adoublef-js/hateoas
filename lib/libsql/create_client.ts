@@ -13,9 +13,11 @@ export function createClient(config: Config): LibSqlClient {
 
 /** @private */
 function _createClient(config: ExpandedConfig): LibSqlClient {
-    // if (config.scheme === "file") {
-    //     return _createSqlite3Client(config);
-    // }
+    console.log(config.scheme);
+
+    if (config.scheme === "file") {
+        return _createSqlite3Client(config);
+    }
 
     return _createWebClient(config);
 }
