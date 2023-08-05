@@ -20,8 +20,6 @@ export function oauth(
 
     return async ({ set }, next) => {
         set("iam", { client, logoutUrl, jwtAuth, aud });
-        console.log("???");
-
         await next();
     };
 }

@@ -28,11 +28,11 @@ if (import.meta.main) {
     app.use("*", oauth(oauthClient, logoutUrl, jwksUrl, audience));
 
     app.get("/", accessToken(), ({ get, html }) => {
-        const [accessToken] = [get("accessToken")];
+        const [accessToken, { client }] = [get("accessToken"), get("iam")];
         if (!accessToken) {
             return html(<Home siteData={{ title: "Home" }} />);
         }
-
+        // NOTE get open_id token
         return html(<Dashboard siteData={{ title: "Dashboard" }} />);
     });
 
